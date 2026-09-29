@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Phone, MapPin, Clock, Star, Shield, Wrench, Truck, 
-  Settings, Key, Image as ImageIcon, Plus, Trash2, Edit3, 
+  Settings, Key, Image as ImageIcon, Trash2, Edit3, 
   Check, X, LogOut, Lock, Calendar, MessageSquare, DollarSign,
-  ChevronRight, AlertCircle, RefreshCw, Upload, CheckCircle2, User,
-  Navigation, Award, Compass, ExternalLink, ChevronDown, Filter,
-  PhoneCall, ShieldCheck, Car, HelpCircle, Eye
+  ChevronRight, AlertCircle, CheckCircle2,
+  ExternalLink, ChevronDown, PhoneCall, ShieldCheck, Car, Eye
 } from 'lucide-react';
 
 // Static asset imports processed and hashed by Vite for production builds
@@ -215,7 +214,7 @@ const INITIAL_ORDERS: DispatchOrder[] = [
 ];
 
 export default function App() {
-  // Persistent State with migration safety for production Vercel builds
+  // Persistent State with migration safety
   const [logo, setLogo] = useState<string>(() => {
     const saved = localStorage.getItem('ost_logo');
     if (saved && !saved.startsWith('/src/assets/')) return saved;
@@ -368,7 +367,6 @@ export default function App() {
       notes: ''
     });
 
-    // Auto-scroll to confirmation or alert
     setTimeout(() => {
       window.scrollTo({ top: 380, behavior: 'smooth' });
     }, 100);
@@ -459,19 +457,20 @@ export default function App() {
   });
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col selection:bg-amber-500 selection:text-slate-950">
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-amber-500 selection:text-slate-950">
       
       {/* TOP EMERGENCY ANNOUNCEMENT BANNER */}
-      <aside aria-label="Emergency Dispatch Status" className="bg-amber-950 text-amber-200 border-b border-amber-900/60 px-4 py-2 text-xs font-medium">
+      <aside aria-label="Emergency Dispatch Status" className="bg-slate-900/90 text-amber-200 border-b border-slate-800/80 px-4 py-2 text-xs font-medium">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span className="font-semibold text-white">24/7 Rapid Mountain Dispatch</span>
-            <span className="text-amber-300/80">Serving Oakland, Deep Creek Lake & Garrett County, MD</span>
+            <span className="font-bold text-white">24/7 Rapid Mountain Dispatch</span>
+            <span className="text-slate-400">Serving Oakland, Deep Creek Lake &amp; Garrett County, MD</span>
           </div>
+
           <div className="flex items-center gap-4 text-xs">
-            <span className="hidden sm:inline text-amber-300/80">Average response time: 20-30 mins</span>
-            <a href="tel:+13013342262" className="text-amber-400 hover:text-white font-bold flex items-center gap-1">
+            <span className="hidden sm:inline text-slate-400">Average ETA: 20-30 mins</span>
+            <a href="tel:+13013342262" className="text-amber-400 hover:text-white font-extrabold flex items-center gap-1 transition-colors">
               <Phone className="w-3.5 h-3.5" />
               <span>(301) 334-2262</span>
             </a>
@@ -479,58 +478,57 @@ export default function App() {
         </div>
       </aside>
 
-      {/* TOP NAVIGATION BAR (Strict 3-Zone Contract) */}
-      <header className="sticky top-0 z-40 bg-slate-900 text-white border-b border-slate-800 shadow-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
+      {/* TOP NAVIGATION BAR */}
+      <header className="sticky top-0 z-40 bg-slate-950/95 backdrop-blur text-white border-b border-slate-800/80 shadow-md">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between gap-4">
           
-          {/* Zone 1: Single text element wordmark with authentic emblem */}
-          <a href="#" className="flex items-center gap-3 group focus:outline-none">
+          {/* Zone 1: Wordmark & Emblem */}
+          <a href="#" className="flex items-center gap-3 group focus:outline-none shrink-0">
             <img 
               src={logo} 
               alt="One Stop Towing" 
               referrerPolicy="no-referrer"
-              className="h-10 w-10 rounded-full object-cover border border-amber-500/40 bg-slate-950 shadow" 
+              className="h-10 w-10 rounded-full object-cover border border-amber-500/30 bg-slate-900 shadow" 
               onError={(e) => {
-                // Fallback to stylized SVG avatar if image cannot load
                 (e.currentTarget as HTMLImageElement).src = BRAND_LOGO;
               }}
             />
             <div className="flex flex-col">
-              <span className="text-lg font-extrabold tracking-tight text-white group-hover:text-amber-400 transition-colors uppercase leading-none">
+              <span className="text-lg font-black tracking-tight text-white group-hover:text-amber-400 transition-colors uppercase leading-none">
                 One Stop Towing
               </span>
-              <span className="text-[11px] font-semibold text-amber-400/90 tracking-wider uppercase mt-0.5">
+              <span className="text-[11px] font-bold text-amber-400 tracking-wider uppercase mt-0.5">
                 &amp; Transport LLC
               </span>
             </div>
           </a>
 
-          {/* Zone 2: 4-6 clean text navigation links with subtle hover underlines */}
-          <nav className="hidden lg:flex items-center gap-8 text-sm font-medium text-slate-300">
+          {/* Zone 2: Navigation Links */}
+          <nav className="hidden lg:flex items-center gap-7 text-sm font-semibold text-slate-300">
             <a href="#services" className="hover:text-amber-400 transition-colors py-1">Services &amp; Rates</a>
             <a href="#dispatch-quote" className="hover:text-amber-400 transition-colors py-1">Dispatch Quote</a>
             <a href="#fleet" className="hover:text-amber-400 transition-colors py-1">Fleet Operations</a>
             <a href="#coverage" className="hover:text-amber-400 transition-colors py-1">Garrett Co. Service Area</a>
-            <a href="#reviews" className="hover:text-amber-400 transition-colors py-1">Customer Reviews</a>
+            <a href="#reviews" className="hover:text-amber-400 transition-colors py-1">Reviews</a>
           </nav>
 
-          {/* Zone 3: 1-2 primary actions */}
-          <div className="flex items-center gap-3">
+          {/* Zone 3: Actions */}
+          <div className="flex items-center gap-3 shrink-0">
             <a 
               href="tel:+13013342262" 
-              className="flex items-center gap-2 bg-amber-500 hover:bg-amber-400 active:scale-95 text-slate-950 px-4 py-2.5 rounded-lg text-sm font-extrabold shadow-sm transition-all whitespace-nowrap"
+              className="flex items-center gap-2 bg-amber-500 hover:bg-amber-400 active:scale-95 text-slate-950 font-black px-4 py-2.5 rounded-lg text-xs sm:text-sm shadow-sm transition-all whitespace-nowrap"
             >
-              <PhoneCall className="w-4 h-4 fill-slate-950 shrink-0" />
+              <PhoneCall className="w-4 h-4 shrink-0" />
               <span>(301) 334-2262</span>
             </a>
 
             <button 
               onClick={() => setIsManagerOpen(true)}
-              className="flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white px-3 py-2.5 rounded-lg text-xs font-medium border border-slate-700 transition-colors whitespace-nowrap"
+              className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white px-3 py-2.5 rounded-lg text-xs font-semibold border border-slate-700 transition-colors whitespace-nowrap cursor-pointer"
               title="Open Manager Dispatch Control Panel"
             >
               <Lock className="w-3.5 h-3.5 text-amber-400" />
-              <span className="hidden sm:inline">Manager Portal</span>
+              <span className="hidden md:inline">Manager Portal</span>
             </button>
           </div>
 
@@ -554,11 +552,11 @@ export default function App() {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-12 gap-10 items-center">
             
-            {/* Left Column: Proposition & Mountain Roadside Authority */}
+            {/* Left Column: Proposition */}
             <div className="lg:col-span-7 space-y-6">
               
-              {/* Unboxed Metadata (Zero-Pill Rule) */}
-              <div className="flex items-center gap-2 text-xs font-semibold text-amber-400 tracking-wide uppercase">
+              {/* Unboxed Metadata */}
+              <div className="flex items-center gap-2 text-xs font-bold text-amber-400 tracking-wide uppercase">
                 <span>Oakland, MD</span>
                 <span aria-hidden="true" className="text-slate-600">·</span>
                 <span>Garrett County</span>
@@ -582,7 +580,7 @@ export default function App() {
                   href="tel:+13013342262" 
                   className="flex items-center justify-center gap-3 bg-amber-500 hover:bg-amber-400 active:scale-95 text-slate-950 font-black px-7 py-4 rounded-xl text-base shadow-xl transition-all"
                 >
-                  <Phone className="w-5 h-5 fill-slate-950" />
+                  <Phone className="w-5 h-5" />
                   <span>Call Emergency Dispatch</span>
                 </a>
                 
@@ -595,7 +593,7 @@ export default function App() {
                 </a>
               </div>
 
-              {/* Trust Indicators (Quiet unboxed inline typography) */}
+              {/* Trust Indicators */}
               <div className="pt-4 border-t border-slate-800/80 grid grid-cols-3 gap-4 text-xs text-slate-400">
                 <div>
                   <div className="text-white font-extrabold text-lg tabular-nums">4.3 / 5.0</div>
@@ -644,7 +642,7 @@ export default function App() {
                 {/* Name & Phone */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-medium text-slate-300 mb-1">Your Name *</label>
+                    <label className="block text-xs font-semibold text-slate-300 mb-1">Your Name *</label>
                     <input 
                       type="text" 
                       required 
@@ -655,7 +653,7 @@ export default function App() {
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-slate-300 mb-1">Phone Number *</label>
+                    <label className="block text-xs font-semibold text-slate-300 mb-1">Phone Number *</label>
                     <input 
                       type="tel" 
                       required 
@@ -669,7 +667,7 @@ export default function App() {
 
                 {/* Pickup Location */}
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1">Current Breakdown Location *</label>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">Current Breakdown Location *</label>
                   <div className="relative">
                     <input 
                       type="text" 
@@ -685,7 +683,7 @@ export default function App() {
 
                 {/* Service Selection */}
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1">Service Required</label>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">Service Required</label>
                   <select 
                     value={orderForm.serviceType} 
                     onChange={e => setOrderForm({...orderForm, serviceType: e.target.value})}
@@ -704,7 +702,7 @@ export default function App() {
                   <div className="bg-slate-950/70 p-3.5 rounded-xl border border-slate-800 space-y-2">
                     <div className="flex justify-between items-center text-xs">
                       <span className="text-slate-300">Estimated Tow Distance:</span>
-                      <span className="font-extrabold text-amber-400 tabular-nums">{orderForm.estimatedMiles} Miles</span>
+                      <span className="font-black text-amber-400 tabular-nums">{orderForm.estimatedMiles} Miles</span>
                     </div>
                     <input 
                       type="range" 
@@ -727,7 +725,7 @@ export default function App() {
                 {/* Vehicle Make/Model & Optional Note */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-medium text-slate-300 mb-1">Vehicle Info (Optional)</label>
+                    <label className="block text-xs font-semibold text-slate-300 mb-1">Vehicle Info (Optional)</label>
                     <input 
                       type="text" 
                       value={orderForm.vehicleInfo} 
@@ -737,7 +735,7 @@ export default function App() {
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-slate-300 mb-1">Drop-off Destination (Optional)</label>
+                    <label className="block text-xs font-semibold text-slate-300 mb-1">Drop-off Destination (Optional)</label>
                     <input 
                       type="text" 
                       value={orderForm.destination} 
@@ -752,7 +750,7 @@ export default function App() {
                 <div className="pt-2">
                   <button 
                     type="submit" 
-                    className="w-full flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-400 active:scale-[0.99] text-slate-950 font-black py-3 px-4 rounded-xl text-sm shadow-md transition-all cursor-pointer"
+                    className="w-full flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-400 active:scale-95 text-slate-950 font-black py-3.5 px-4 rounded-xl text-sm shadow-md transition-all cursor-pointer"
                   >
                     <span>Dispatch Tow Rig Now</span>
                     <span className="tabular-nums font-mono">(${calculatedTotal.toFixed(2)})</span>
@@ -769,8 +767,8 @@ export default function App() {
         </div>
       </section>
 
-      {/* QUICK VALUE PROPOSITIONS & DOMAIN PROOFS */}
-      <section className="bg-slate-900 border-b border-slate-800 text-slate-300 py-6">
+      {/* QUICK VALUE PROPOSITIONS */}
+      <section className="bg-slate-900/60 border-b border-slate-800/80 text-slate-300 py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="flex items-center gap-3">
@@ -822,40 +820,40 @@ export default function App() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
-            <div className="text-xs font-bold uppercase tracking-wider text-amber-700 mb-1">
+            <div className="text-xs font-bold uppercase tracking-wider text-amber-400 mb-1">
               Transparent Pricing Grid
             </div>
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-900">
+            <h2 className="text-3xl sm:text-4xl font-black text-white">
               Services &amp; Standard Rates
             </h2>
-            <p className="text-slate-600 text-sm mt-2 max-w-2xl">
+            <p className="text-slate-400 text-sm mt-2 max-w-2xl">
               All rates are live and managed directly by our Oakland dispatch office. No surge pricing, hidden gate fees, or hookup penalties.
             </p>
           </div>
 
-          {/* Interactive Category Filter (Allowed interactive buttons) */}
-          <div className="flex items-center p-1 bg-slate-200/80 rounded-xl border border-slate-300 shrink-0">
+          {/* Interactive Category Filter */}
+          <div className="flex items-center p-1 bg-slate-900 rounded-xl border border-slate-800 shrink-0">
             <button 
               onClick={() => setServiceFilter('all')} 
-              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors ${serviceFilter === 'all' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
+              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${serviceFilter === 'all' ? 'bg-amber-500 text-slate-950 font-bold shadow-sm' : 'text-slate-400 hover:text-white'}`}
             >
               All Services
             </button>
             <button 
               onClick={() => setServiceFilter('towing')} 
-              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors ${serviceFilter === 'towing' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
+              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${serviceFilter === 'towing' ? 'bg-amber-500 text-slate-950 font-bold shadow-sm' : 'text-slate-400 hover:text-white'}`}
             >
               Standard Tow
             </button>
             <button 
               onClick={() => setServiceFilter('roadside')} 
-              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors ${serviceFilter === 'roadside' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
+              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${serviceFilter === 'roadside' ? 'bg-amber-500 text-slate-950 font-bold shadow-sm' : 'text-slate-400 hover:text-white'}`}
             >
               Roadside
             </button>
             <button 
               onClick={() => setServiceFilter('heavy')} 
-              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors ${serviceFilter === 'heavy' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
+              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${serviceFilter === 'heavy' ? 'bg-amber-500 text-slate-950 font-bold shadow-sm' : 'text-slate-400 hover:text-white'}`}
             >
               Heavy Duty
             </button>
@@ -867,35 +865,35 @@ export default function App() {
           {displayedServices.map((item) => (
             <div 
               key={item.id} 
-              className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
+              className="bg-slate-900/90 rounded-2xl border border-slate-800/90 p-6 shadow-sm hover:border-slate-700 hover:shadow-xl transition-all flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 rounded-xl bg-amber-100 text-amber-900 flex items-center justify-center font-bold">
+                  <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center font-bold">
                     {item.category === 'heavy' ? <Truck className="w-6 h-6" /> : item.category === 'roadside' ? <Wrench className="w-6 h-6" /> : <Car className="w-6 h-6" />}
                   </div>
-                  <span className="text-xs text-slate-500 flex items-center gap-1">
-                    <Clock className="w-3.5 h-3.5 text-amber-600" />
+                  <span className="text-xs text-slate-400 flex items-center gap-1">
+                    <Clock className="w-3.5 h-3.5 text-amber-400" />
                     <span>ETA: {item.typicalResponse}</span>
                   </span>
                 </div>
 
-                <h3 className="font-bold text-lg text-slate-900 mb-2">{item.name}</h3>
-                <p className="text-xs text-slate-600 leading-relaxed mb-6">{item.description}</p>
+                <h3 className="font-bold text-lg text-white mb-2">{item.name}</h3>
+                <p className="text-xs text-slate-300 leading-relaxed mb-6">{item.description}</p>
               </div>
 
-              <div className="border-t border-slate-100 pt-4">
+              <div className="border-t border-slate-800 pt-4">
                 <div className="flex items-baseline justify-between mb-3">
                   <div>
-                    <span className="text-2xl font-black text-slate-900 tabular-nums">${item.basePrice.toFixed(2)}</span>
-                    <span className="text-xs text-slate-500 ml-1">Base Fee</span>
+                    <span className="text-2xl font-black text-white tabular-nums">${item.basePrice.toFixed(2)}</span>
+                    <span className="text-xs text-slate-400 ml-1">Base Fee</span>
                   </div>
                   {item.perMile > 0 ? (
-                    <span className="text-xs font-semibold text-amber-700 bg-amber-50 px-2 py-1 rounded border border-amber-200/60 tabular-nums">
+                    <span className="text-xs font-bold text-amber-300 bg-amber-950/60 px-2 py-1 rounded border border-amber-800/60 tabular-nums">
                       +${item.perMile.toFixed(2)} / mile
                     </span>
                   ) : (
-                    <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2 py-1 rounded border border-emerald-200/60">
+                    <span className="text-xs font-bold text-emerald-400 bg-emerald-950/60 px-2 py-1 rounded border border-emerald-800/60">
                       Flat Rate
                     </span>
                   )}
@@ -907,7 +905,7 @@ export default function App() {
                     const el = document.getElementById('dispatch-quote');
                     if (el) el.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="w-full bg-slate-900 hover:bg-slate-800 active:scale-95 text-white font-bold text-xs py-2.5 rounded-lg transition-colors flex items-center justify-center gap-1.5"
+                  className="w-full bg-slate-800 hover:bg-slate-700 active:scale-95 text-white font-bold text-xs py-2.5 rounded-lg transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <span>Select &amp; Estimate</span>
                   <ChevronRight className="w-3.5 h-3.5 text-amber-400" />
@@ -920,18 +918,18 @@ export default function App() {
       </section>
 
       {/* FLEET & OPERATIONS GALLERY */}
-      <section id="fleet" className="py-16 md:py-24 bg-slate-100 border-y border-slate-200">
+      <section id="fleet" className="py-16 md:py-24 bg-slate-900/40 border-y border-slate-800/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-10">
             <div>
-              <div className="text-xs font-bold uppercase tracking-wider text-amber-800 mb-1">
+              <div className="text-xs font-bold uppercase tracking-wider text-amber-400 mb-1">
                 Equipment &amp; Recovery Rigs
               </div>
-              <h2 className="text-3xl sm:text-4xl font-black text-slate-900">
+              <h2 className="text-3xl sm:text-4xl font-black text-white">
                 Garrett County Fleet Operations
               </h2>
-              <p className="text-slate-600 text-sm mt-1">
+              <p className="text-slate-400 text-sm mt-1">
                 Equipped for steep mountain inclines, icy conditions, and heavy transport throughout Western Maryland.
               </p>
             </div>
@@ -946,7 +944,7 @@ export default function App() {
               <div 
                 key={photo.id} 
                 onClick={() => setActivePhotoModal(photo)}
-                className="group relative rounded-2xl overflow-hidden bg-slate-900 shadow-sm hover:shadow-xl transition-all cursor-pointer aspect-4/3"
+                className="group relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-800/80 shadow-sm hover:shadow-xl transition-all cursor-pointer aspect-4/3"
               >
                 <img 
                   src={photo.url} 
@@ -954,7 +952,6 @@ export default function App() {
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   onError={(e) => {
-                    // Safe fallback container
                     (e.currentTarget as HTMLImageElement).src = HERO_IMAGE;
                   }}
                 />
@@ -981,7 +978,7 @@ export default function App() {
 
       {/* SERVICE AREA & GARRETT COUNTY COVERAGE */}
       <section id="coverage" className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-slate-900 text-white rounded-3xl p-8 md:p-12 border border-slate-800 shadow-xl grid md:grid-cols-12 gap-8 items-center">
+        <div className="bg-slate-900/90 text-white rounded-3xl p-8 md:p-12 border border-slate-800 shadow-xl grid md:grid-cols-12 gap-8 items-center">
           
           <div className="md:col-span-7 space-y-4">
             <div className="flex items-center gap-2 text-xs font-bold text-amber-400 tracking-wide uppercase">
@@ -1039,7 +1036,7 @@ export default function App() {
 
           <div className="md:col-span-5 bg-slate-950 p-6 rounded-2xl border border-slate-800 space-y-4">
             <h3 className="text-base font-bold text-white flex items-center gap-2">
-              <Compass className="w-4 h-4 text-amber-400" />
+              <PhoneCall className="w-4 h-4 text-amber-400" />
               <span>Direct Emergency Contact</span>
             </h3>
             
@@ -1081,54 +1078,54 @@ export default function App() {
           {/* Left Column: Overall Score & Review Submission */}
           <div className="lg:col-span-5 space-y-6">
             <div>
-              <div className="text-xs font-bold uppercase tracking-wider text-amber-800 mb-1">
+              <div className="text-xs font-bold uppercase tracking-wider text-amber-400 mb-1">
                 Verified Local Feedback
               </div>
-              <h2 className="text-3xl font-black text-slate-900">
+              <h2 className="text-3xl font-black text-white">
                 Customer Testimonials
               </h2>
               
               <div className="flex items-center gap-3 mt-3">
-                <div className="flex text-amber-500">
+                <div className="flex text-amber-400">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-amber-500" />
+                    <Star key={i} className="w-5 h-5 fill-amber-400" />
                   ))}
                 </div>
-                <span className="text-lg font-black text-slate-900 tabular-nums">4.3 / 5.0</span>
-                <span className="text-xs text-slate-500">· 29+ Google Reviews</span>
+                <span className="text-lg font-black text-white tabular-nums">4.3 / 5.0</span>
+                <span className="text-xs text-slate-400">· 29+ Google Reviews</span>
               </div>
               
-              <p className="text-slate-600 text-xs mt-2 leading-relaxed">
+              <p className="text-slate-400 text-xs mt-2 leading-relaxed">
                 Read real accounts from stranded drivers, local residents, and visitors who relied on One Stop Towing.
               </p>
             </div>
 
             {/* Leave a Guest Review Form */}
-            <form onSubmit={handleReviewSubmit} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-              <h3 className="font-bold text-slate-900 text-sm flex items-center gap-2">
-                <MessageSquare className="w-4 h-4 text-amber-600" />
+            <form onSubmit={handleReviewSubmit} className="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-sm space-y-4">
+              <h3 className="font-bold text-white text-sm flex items-center gap-2">
+                <MessageSquare className="w-4 h-4 text-amber-400" />
                 <span>Submit Your Experience</span>
               </h3>
 
               <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">Your Full Name *</label>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">Your Full Name *</label>
                 <input 
                   type="text" 
                   required 
                   value={reviewForm.author} 
                   onChange={e => setReviewForm({...reviewForm, author: e.target.value})}
                   placeholder="e.g. Robinne G." 
-                  className="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs focus:ring-2 focus:ring-amber-500 focus:outline-none" 
+                  className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500" 
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-medium text-slate-700 mb-1">Rating</label>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">Rating</label>
                   <select 
                     value={reviewForm.rating} 
                     onChange={e => setReviewForm({...reviewForm, rating: Number(e.target.value)})}
-                    className="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs focus:ring-2 focus:ring-amber-500 focus:outline-none"
+                    className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500"
                   >
                     <option value={5}>5 Stars - Excellent</option>
                     <option value={4}>4 Stars - Good</option>
@@ -1138,11 +1135,11 @@ export default function App() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-slate-700 mb-1">Service Received</label>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">Service Received</label>
                   <select 
                     value={reviewForm.serviceUsed} 
                     onChange={e => setReviewForm({...reviewForm, serviceUsed: e.target.value})}
-                    className="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs focus:ring-2 focus:ring-amber-500 focus:outline-none"
+                    className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500"
                   >
                     {pricing.map(p => (
                       <option key={p.id} value={p.name}>{p.name}</option>
@@ -1152,27 +1149,27 @@ export default function App() {
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">Your Comments *</label>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">Your Comments *</label>
                 <textarea 
                   required 
                   rows={3} 
                   value={reviewForm.comment} 
                   onChange={e => setReviewForm({...reviewForm, comment: e.target.value})}
                   placeholder="How was the response time and driver courtesy?" 
-                  className="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs focus:ring-2 focus:ring-amber-500 focus:outline-none" 
+                  className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500" 
                 />
               </div>
 
               <button 
                 type="submit" 
-                className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 rounded-lg text-xs transition-colors"
+                className="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-2.5 rounded-lg text-xs transition-colors cursor-pointer"
               >
                 Post Review
               </button>
 
               {reviewSubmitted && (
-                <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 p-2.5 rounded-lg text-xs flex items-center gap-2">
-                  <Check className="w-3.5 h-3.5 text-emerald-600" />
+                <div className="bg-emerald-950/80 border border-emerald-500/60 text-emerald-200 p-2.5 rounded-lg text-xs flex items-center gap-2">
+                  <Check className="w-3.5 h-3.5 text-emerald-400" />
                   <span>Thank you! Your feedback has been published.</span>
                 </div>
               )}
@@ -1183,31 +1180,31 @@ export default function App() {
           {/* Right Column: Review List */}
           <div className="lg:col-span-7 space-y-4">
             {reviews.filter(r => r.status === 'approved').map((rev) => (
-              <div key={rev.id} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+              <div key={rev.id} className="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-sm space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-full bg-amber-100 text-amber-900 flex items-center justify-center font-bold text-xs">
+                    <div className="w-9 h-9 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-xs">
                       {rev.author.charAt(0)}
                     </div>
                     <div>
-                      <h4 className="font-bold text-slate-900 text-sm">{rev.author}</h4>
+                      <h4 className="font-bold text-white text-sm">{rev.author}</h4>
                       {rev.serviceUsed && (
-                        <p className="text-[11px] text-slate-500">{rev.serviceUsed}</p>
+                        <p className="text-[11px] text-slate-400">{rev.serviceUsed}</p>
                       )}
                     </div>
                   </div>
                   
                   <div className="text-right">
-                    <div className="flex text-amber-500 justify-end">
+                    <div className="flex text-amber-400 justify-end">
                       {[...Array(rev.rating)].map((_, i) => (
-                        <Star key={i} className="w-3.5 h-3.5 fill-amber-500" />
+                        <Star key={i} className="w-3.5 h-3.5 fill-amber-400" />
                       ))}
                     </div>
-                    <span className="text-[11px] text-slate-400 mt-0.5 inline-block">{rev.date}</span>
+                    <span className="text-[11px] text-slate-500 mt-0.5 inline-block">{rev.date}</span>
                   </div>
                 </div>
 
-                <p className="text-slate-700 text-xs sm:text-sm leading-relaxed">
+                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
                   "{rev.comment}"
                 </p>
               </div>
@@ -1218,7 +1215,7 @@ export default function App() {
       </section>
 
       {/* FOOTER */}
-      <footer className="mt-auto bg-slate-950 text-slate-400 py-14 border-t border-slate-800">
+      <footer className="mt-auto bg-slate-950 text-slate-400 py-14 border-t border-slate-800/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-12 gap-8 mb-10">
             
@@ -1265,7 +1262,7 @@ export default function App() {
               <div>
                 <button 
                   onClick={() => setIsManagerOpen(true)}
-                  className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white px-4 py-2 rounded-lg text-xs border border-slate-700 transition-colors"
+                  className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white px-4 py-2 rounded-lg text-xs border border-slate-700 transition-colors cursor-pointer"
                 >
                   <Lock className="w-3.5 h-3.5 text-amber-400" />
                   <span>Manager Control Panel</span>
@@ -1299,7 +1296,7 @@ export default function App() {
           >
             <button 
               onClick={() => setActivePhotoModal(null)}
-              className="absolute top-3 right-3 bg-slate-950/80 hover:bg-slate-800 text-white p-2 rounded-full z-10 transition-colors"
+              className="absolute top-3 right-3 bg-slate-950/80 hover:bg-slate-800 text-white p-2 rounded-full z-10 transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -1321,7 +1318,7 @@ export default function App() {
               </div>
               <button 
                 onClick={() => setActivePhotoModal(null)}
-                className="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg"
+                className="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg cursor-pointer"
               >
                 Close
               </button>
@@ -1348,7 +1345,7 @@ export default function App() {
               </div>
               <button 
                 onClick={() => setIsManagerOpen(false)} 
-                className="text-slate-400 hover:text-white p-2 rounded-lg hover:bg-slate-800 transition-colors"
+                className="text-slate-400 hover:text-white p-2 rounded-lg hover:bg-slate-800 transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -1398,7 +1395,7 @@ export default function App() {
                 <div className="flex border-b border-slate-800 bg-slate-950 px-2 overflow-x-auto">
                   <button 
                     onClick={() => setActiveTab('orders')} 
-                    className={`px-4 py-3 text-xs font-bold flex items-center gap-2 border-b-2 whitespace-nowrap transition-colors ${activeTab === 'orders' ? 'border-amber-500 text-amber-400 bg-slate-900/60' : 'border-transparent text-slate-400 hover:text-slate-200'}`}
+                    className={`px-4 py-3 text-xs font-bold flex items-center gap-2 border-b-2 whitespace-nowrap transition-colors cursor-pointer ${activeTab === 'orders' ? 'border-amber-500 text-amber-400 bg-slate-900/60' : 'border-transparent text-slate-400 hover:text-slate-200'}`}
                   >
                     <Truck className="w-4 h-4" />
                     <span>Orders &amp; Dispatch ({orders.length})</span>
@@ -1406,7 +1403,7 @@ export default function App() {
 
                   <button 
                     onClick={() => setActiveTab('pricing')} 
-                    className={`px-4 py-3 text-xs font-bold flex items-center gap-2 border-b-2 whitespace-nowrap transition-colors ${activeTab === 'pricing' ? 'border-amber-500 text-amber-400 bg-slate-900/60' : 'border-transparent text-slate-400 hover:text-slate-200'}`}
+                    className={`px-4 py-3 text-xs font-bold flex items-center gap-2 border-b-2 whitespace-nowrap transition-colors cursor-pointer ${activeTab === 'pricing' ? 'border-amber-500 text-amber-400 bg-slate-900/60' : 'border-transparent text-slate-400 hover:text-slate-200'}`}
                   >
                     <DollarSign className="w-4 h-4" />
                     <span>Rates / ROQ Pricing</span>
@@ -1414,7 +1411,7 @@ export default function App() {
 
                   <button 
                     onClick={() => setActiveTab('photos')} 
-                    className={`px-4 py-3 text-xs font-bold flex items-center gap-2 border-b-2 whitespace-nowrap transition-colors ${activeTab === 'photos' ? 'border-amber-500 text-amber-400 bg-slate-900/60' : 'border-transparent text-slate-400 hover:text-slate-200'}`}
+                    className={`px-4 py-3 text-xs font-bold flex items-center gap-2 border-b-2 whitespace-nowrap transition-colors cursor-pointer ${activeTab === 'photos' ? 'border-amber-500 text-amber-400 bg-slate-900/60' : 'border-transparent text-slate-400 hover:text-slate-200'}`}
                   >
                     <ImageIcon className="w-4 h-4" />
                     <span>Fleet Gallery ({photos.length})</span>
@@ -1422,7 +1419,7 @@ export default function App() {
 
                   <button 
                     onClick={() => setActiveTab('reviews')} 
-                    className={`px-4 py-3 text-xs font-bold flex items-center gap-2 border-b-2 whitespace-nowrap transition-colors ${activeTab === 'reviews' ? 'border-amber-500 text-amber-400 bg-slate-900/60' : 'border-transparent text-slate-400 hover:text-slate-200'}`}
+                    className={`px-4 py-3 text-xs font-bold flex items-center gap-2 border-b-2 whitespace-nowrap transition-colors cursor-pointer ${activeTab === 'reviews' ? 'border-amber-500 text-amber-400 bg-slate-900/60' : 'border-transparent text-slate-400 hover:text-slate-200'}`}
                   >
                     <MessageSquare className="w-4 h-4" />
                     <span>Reviews Moderation</span>
@@ -1430,7 +1427,7 @@ export default function App() {
 
                   <button 
                     onClick={() => setActiveTab('pin')} 
-                    className={`px-4 py-3 text-xs font-bold flex items-center gap-2 border-b-2 whitespace-nowrap transition-colors ${activeTab === 'pin' ? 'border-amber-500 text-amber-400 bg-slate-900/60' : 'border-transparent text-slate-400 hover:text-slate-200'}`}
+                    className={`px-4 py-3 text-xs font-bold flex items-center gap-2 border-b-2 whitespace-nowrap transition-colors cursor-pointer ${activeTab === 'pin' ? 'border-amber-500 text-amber-400 bg-slate-900/60' : 'border-transparent text-slate-400 hover:text-slate-200'}`}
                   >
                     <Key className="w-4 h-4" />
                     <span>Security PIN</span>
@@ -1439,7 +1436,7 @@ export default function App() {
                   <div className="ml-auto flex items-center pr-2">
                     <button 
                       onClick={() => setIsAuthenticated(false)} 
-                      className="text-xs text-rose-400 hover:text-rose-300 flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-slate-800 transition-colors"
+                      className="text-xs text-rose-400 hover:text-rose-300 flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-slate-800 transition-colors cursor-pointer"
                       title="Lock console"
                     >
                       <LogOut className="w-3.5 h-3.5" />
@@ -1466,7 +1463,7 @@ export default function App() {
                             <button
                               key={st}
                               onClick={() => setOrderStatusFilter(st)}
-                              className={`px-2.5 py-1 text-[11px] font-semibold rounded ${orderStatusFilter === st ? 'bg-amber-500 text-slate-950 font-bold' : 'text-slate-400 hover:text-white'}`}
+                              className={`px-2.5 py-1 text-[11px] font-semibold rounded cursor-pointer ${orderStatusFilter === st ? 'bg-amber-500 text-slate-950 font-bold' : 'text-slate-400 hover:text-white'}`}
                             >
                               {st === 'all' ? 'All' : st}
                             </button>
@@ -1540,7 +1537,7 @@ export default function App() {
                                 <select 
                                   value={ord.status} 
                                   onChange={(e) => handleUpdateOrderStatus(ord.id, e.target.value as DispatchOrder['status'])}
-                                  className="bg-slate-900 border border-slate-700 text-xs text-white rounded-lg p-2 focus:outline-none focus:border-amber-500"
+                                  className="bg-slate-900 border border-slate-700 text-xs text-white rounded-lg p-2 focus:outline-none focus:border-amber-500 cursor-pointer"
                                 >
                                   <option value="Pending">Pending</option>
                                   <option value="Dispatched">Dispatched</option>
@@ -1550,7 +1547,7 @@ export default function App() {
 
                                 <button 
                                   onClick={() => handleDeleteOrder(ord.id)} 
-                                  className="text-slate-400 hover:text-rose-400 p-2 rounded hover:bg-slate-900 transition-colors"
+                                  className="text-slate-400 hover:text-rose-400 p-2 rounded hover:bg-slate-900 transition-colors cursor-pointer"
                                   title="Delete order record"
                                 >
                                   <Trash2 className="w-4 h-4" />
@@ -1609,14 +1606,14 @@ export default function App() {
                                   </div>
                                   <button 
                                     onClick={() => saveEditPrice(p.id)}
-                                    className="bg-emerald-600 hover:bg-emerald-500 text-white p-2 rounded font-bold transition-colors mt-3"
+                                    className="bg-emerald-600 hover:bg-emerald-500 text-white p-2 rounded font-bold transition-colors mt-3 cursor-pointer"
                                     title="Save changes"
                                   >
                                     <Check className="w-4 h-4" />
                                   </button>
                                   <button 
                                     onClick={() => setEditingPriceId(null)}
-                                    className="bg-slate-800 hover:bg-slate-700 text-slate-300 p-2 rounded font-bold transition-colors mt-3"
+                                    className="bg-slate-800 hover:bg-slate-700 text-slate-300 p-2 rounded font-bold transition-colors mt-3 cursor-pointer"
                                     title="Cancel"
                                   >
                                     <X className="w-4 h-4" />
@@ -1634,7 +1631,7 @@ export default function App() {
                                   </div>
                                   <button 
                                     onClick={() => startEditPrice(p)} 
-                                    className="bg-slate-800 hover:bg-slate-700 p-2 rounded-lg text-slate-300 hover:text-white transition-colors"
+                                    className="bg-slate-800 hover:bg-slate-700 p-2 rounded-lg text-slate-300 hover:text-white transition-colors cursor-pointer"
                                     title="Edit price rates"
                                   >
                                     <Edit3 className="w-4 h-4" />
@@ -1684,7 +1681,7 @@ export default function App() {
                           />
                           <button 
                             type="submit" 
-                            className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs transition-colors shrink-0"
+                            className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs transition-colors shrink-0 cursor-pointer"
                           >
                             Add to Gallery
                           </button>
@@ -1704,7 +1701,7 @@ export default function App() {
                               </div>
                               <button 
                                 onClick={() => handleDeletePhoto(p.id)} 
-                                className="absolute top-1.5 right-1.5 bg-rose-600 hover:bg-rose-500 text-white p-1 rounded-full shadow"
+                                className="absolute top-1.5 right-1.5 bg-rose-600 hover:bg-rose-500 text-white p-1 rounded-full shadow cursor-pointer"
                                 title="Remove photo"
                               >
                                 <Trash2 className="w-3.5 h-3.5" />
@@ -1738,7 +1735,7 @@ export default function App() {
 
                             <button 
                               onClick={() => setReviews(reviews.filter(x => x.id !== r.id))}
-                              className="text-slate-400 hover:text-rose-400 p-2 rounded hover:bg-slate-900 transition-colors shrink-0"
+                              className="text-slate-400 hover:text-rose-400 p-2 rounded hover:bg-slate-900 transition-colors shrink-0 cursor-pointer"
                               title="Delete review"
                             >
                               <Trash2 className="w-4 h-4" />
@@ -1800,7 +1797,7 @@ export default function App() {
                               localStorage.removeItem('ost_photos');
                             }
                           }}
-                          className="text-xs text-amber-400 hover:text-amber-300 font-semibold underline"
+                          className="text-xs text-amber-400 hover:text-amber-300 font-semibold underline cursor-pointer"
                         >
                           Reset to Initial Oakland Rates &amp; Gallery
                         </button>
