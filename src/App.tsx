@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useId } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Phone, MapPin, Clock, Star, Shield, Wrench, Truck, 
   Settings, Key, Image as ImageIcon, Plus, Trash2, Edit3, 
@@ -8,9 +8,12 @@ import {
   PhoneCall, ShieldCheck, Car, HelpCircle, Eye
 } from 'lucide-react';
 
-// Authentic Generated Brand Assets
-const BRAND_LOGO = '/src/assets/images/one_stop_towing_logo_1790679301242.jpg';
-const HERO_IMAGE = '/src/assets/images/hero_tow_truck_1790679253151.jpg';
+// Static asset imports processed and hashed by Vite for production builds
+import BRAND_LOGO from './assets/images/one_stop_towing_logo_1790679301242.jpg';
+import HERO_IMAGE from './assets/images/hero_tow_truck_1790679253151.jpg';
+import HEAVY_DUTY_IMAGE from './assets/images/towing_heavy_duty_1790679266916.jpg';
+import FLATBED_IMAGE from './assets/images/towing_flatbed_recovery_1790679278577.jpg';
+import ROADSIDE_IMAGE from './assets/images/roadside_service_assist_1790679289216.jpg';
 
 export interface ServicePrice {
   id: string;
@@ -115,25 +118,25 @@ const INITIAL_PRICING: ServicePrice[] = [
 const INITIAL_PHOTOS: GalleryPhoto[] = [
   { 
     id: '1', 
-    url: '/src/assets/images/hero_tow_truck_1790679253151.jpg', 
+    url: HERO_IMAGE, 
     caption: 'Modern Rollback Tow Truck on Garrett County mountain highway',
     tag: 'Flatbed'
   },
   { 
     id: '2', 
-    url: '/src/assets/images/towing_heavy_duty_1790679266916.jpg', 
+    url: HEAVY_DUTY_IMAGE, 
     caption: 'Commercial Heavy-Duty Wrecker Recovery in Western Maryland',
     tag: 'Heavy Duty'
   },
   { 
     id: '3', 
-    url: '/src/assets/images/towing_flatbed_recovery_1790679278577.jpg', 
+    url: FLATBED_IMAGE, 
     caption: 'Precision Wheel-Lift & Strapping for Damage-Free Transport',
     tag: 'Transport'
   },
   { 
     id: '4', 
-    url: '/src/assets/images/roadside_service_assist_1790679289216.jpg', 
+    url: ROADSIDE_IMAGE, 
     caption: 'Fast Roadside Diagnostic, Jump Start & Safety Support',
     tag: 'Roadside'
   }
@@ -212,8 +215,12 @@ const INITIAL_ORDERS: DispatchOrder[] = [
 ];
 
 export default function App() {
-  // Persistent State
-  const [logo, setLogo] = useState<string>(() => localStorage.getItem('ost_logo') || BRAND_LOGO);
+  // Persistent State with migration safety for production Vercel builds
+  const [logo, setLogo] = useState<string>(() => {
+    const saved = localStorage.getItem('ost_logo');
+    if (saved && !saved.startsWith('/src/assets/')) return saved;
+    return BRAND_LOGO;
+  });
   const [managerPin, setManagerPin] = useState<string>(() => localStorage.getItem('ost_pin') || '1234');
   const [pricing, setPricing] = useState<ServicePrice[]>(() => {
     const saved = localStorage.getItem('ost_pricing');
@@ -221,7 +228,19 @@ export default function App() {
   });
   const [photos, setPhotos] = useState<GalleryPhoto[]>(() => {
     const saved = localStorage.getItem('ost_photos');
-    return saved ? JSON.parse(saved) : INITIAL_PHOTOS;
+    if (!saved) return INITIAL_PHOTOS;
+    try {
+      const parsed: GalleryPhoto[] = JSON.parse(saved);
+      return parsed.map(p => {
+        if (p.url.includes('/src/assets/images/hero_tow_truck')) return { ...p, url: HERO_IMAGE };
+        if (p.url.includes('/src/assets/images/towing_heavy_duty')) return { ...p, url: HEAVY_DUTY_IMAGE };
+        if (p.url.includes('/src/assets/images/towing_flatbed_recovery')) return { ...p, url: FLATBED_IMAGE };
+        if (p.url.includes('/src/assets/images/roadside_service_assist')) return { ...p, url: ROADSIDE_IMAGE };
+        return p;
+      });
+    } catch {
+      return INITIAL_PHOTOS;
+    }
   });
   const [reviews, setReviews] = useState<CustomerReview[]>(() => {
     const saved = localStorage.getItem('ost_reviews');
